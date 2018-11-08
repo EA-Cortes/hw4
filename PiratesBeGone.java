@@ -27,10 +27,13 @@ public class PiratesBeGone{
 	{
 		// Assume there's always a path from Southchester to every other city
 		// Homie starts journey with 19 other homies
+		// Homie has hella cash
+		// Homie has a whip that fits 20 people max
 		// Homie never arrests a pirate himself unless he's at Tarasoga
 		// We only leave homies behind if they arrest a pirate
 		// Each path the whip can take can be taken in reverse
 
+		// Inputs
 		// First line of input takes n and m
 		// n - the next n lines contain 2 integers
 			// The number of pirates
@@ -40,5 +43,8 @@ public class PiratesBeGone{
 			// ID of starting city
 			// ID of destination city
 			// cost of using the path per passenger
+
+		// Output
+		// Integer representing the min amount of cheddar that homie will need to arrest Ruffus
 	} 
 }
