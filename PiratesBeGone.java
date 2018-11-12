@@ -178,27 +178,46 @@ public class PiratesBeGone{
 
 
 		// Step 2 -- Relax all edges for the number of edges
-		for(int i =1; i < n; i++)
+		// for(int i =1; i < n; i++)
+		while(currentCity != n -1)
 		{
 			for(int j = 0; j < m; ++j)
 			{
+
 				Edge edge;
 				edge = graph.allEdges.get(j);
 				int u = edge.source;
-				int v = edge.destination;
-
-				int r_u = v;
-				int r_v = u;
+				int v = edge.destination;	
 
 				int weight = edge.roadCost;
 			
+
 				if(costs[u] != Integer.MAX_VALUE && costs[u] + weight < costs[v]){
-					costs[v] = costs[u] + weight;
-				// }else if(costs[r_u] != Integer.MAX_VALUE && costs[r_u] + weight < costs[r_v]){
-					// costs[v] = costs[r_u] + weight;
-				
+					costs[v] = costs[u] + weight;	
+					
+					thisCity = graph.allCities.get(j);
+					// System.out.println("Next city: " + (v+1) + " Costs: " + edge.roadCost + "\n");
+					roadPrice = edge.roadCost;			
+					// totalCost += mutexes *roadPrice;
+
+					if(thisCity.nPirates > mutexes){
+						totalCost += mutexes * weight;
+						mutexes += thisCity.nPirates;
+						
+					}else{
+						totalCost += mutexes * weight;
+						mutexes -= thisCity.nPirates;
+					}	
 				}
 			}
+
+		
+					
+					
+					roadPrice = 0;
+
+					
+					currentCity++;
 		}
 
 		System.out.println();
@@ -267,7 +286,6 @@ public class PiratesBeGone{
 		
 		}
 	*/
-		// totalCost = costs[n-1];
 		System.out.println("\n" + totalCost);
 
 	}
@@ -299,14 +317,6 @@ public class PiratesBeGone{
 		}
 
 		Xorviar(graph);
-		// Assume there's always a path from Southchester to every other city
-		// Homie starts journey with 19 other homies
-		// Homie has hella cash
-		// Homie has a whip that fits 20 people max
-		// Homie never arrests a pirate himself unless he's at Tarasoga
-		// We only leave homies behind if they arrest a pirate
-		// Each path the whip can take can be taken in reverse
-
 		// Inputs
 		// First line of input takes n and m
 		// n - the next n lines contain 2 integers
