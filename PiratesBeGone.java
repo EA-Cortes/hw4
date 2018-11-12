@@ -70,7 +70,7 @@ public class PiratesBeGone{
 			allEdges.add(edge);
 		}
 
-		public ArrayList<Edge> kruskalMST()
+		public void kruskalMST()
 		{
 			// Step 1: Sort edges by roadCost
 			PriorityQueue<Edge> pq = new PriorityQueue<>(allEdges.size(), Comparator.comparingInt(o -> o.roadCost));
@@ -108,11 +108,9 @@ public class PiratesBeGone{
 			}
 
 			// ----------- Output working MSTs ----------- 
-			printGraph(allEdges);
-			printCities(allCities);
-			printGraph(mst);
+			// printGraph(allEdges);
+			// printCities(allCities);
 
-			return mst;
 		}
 
 		// Auxilary function to create subset 
@@ -164,17 +162,54 @@ public class PiratesBeGone{
 	public static void Xorviar(Graph graph){
 		ArrayList<Edge> mst = new ArrayList<>();
 		City thisCity = new City(0, 0, 0);
+		int currentCity = 0, roadPrice = 0, nextCity = 0;
+		graph.kruskalMST();
 		
-		mst = graph.kruskalMST();
-		
-		int currentCity = 0, roadPrice = 0, nextCity = 0, p = 0, penUlt = 0;
+		int costs[] = new int[n];
+
+		// Step 1 -- Initialize distances from source
+		for(int i = 0; i < n; ++i){
+			Edge edge;
+			edge = graph.allEdges.get(i);
+
+			costs[i] = Integer.MAX_VALUE;
+		}
+		costs[currentCity] = 0;
 
 
+		// Step 2 -- Relax all edges for the number of edges
+		for(int i =1; i < n; i++)
+		{
+			for(int j = 0; j < m; ++j)
+			{
+				Edge edge;
+				edge = graph.allEdges.get(j);
+				int u = edge.source;
+				int v = edge.destination;
+
+				int r_u = v;
+				int r_v = u;
+
+				int weight = edge.roadCost;
+			
+				if(costs[u] != Integer.MAX_VALUE && costs[u] + weight < costs[v]){
+					costs[v] = costs[u] + weight;
+				// }else if(costs[r_u] != Integer.MAX_VALUE && costs[r_u] + weight < costs[r_v]){
+					// costs[v] = costs[r_u] + weight;
+				
+				}
+			}
+		}
+
+		System.out.println();
+		for(int i = 0; i < n; i++){
+			System.out.println("Cost to " + (i+1) + ": " + costs[i]);
+		}
 		// while(currentCity != n -1){
-			while(currentCity != n -1){
-			System.out.println(mutexes + " Mutexes arrived at city: " + currentCity);
+			// while(currentCity != n -1){
+			// System.out.println(mutexes + " Mutexes arrived at city: " + currentCity);
 
-			// go from current city to next cheapest
+		/*	// go from current city to next cheapest
 			for(int i = 0; i < mst.size(); i++)
 			{
 				Edge edge = mst.get(i);
@@ -229,9 +264,10 @@ public class PiratesBeGone{
 			
 			currentCity = nextCity;
 			// currentCity++;
-			p++;
+		
 		}
-
+	*/
+		// totalCost = costs[n-1];
 		System.out.println("\n" + totalCost);
 
 	}
@@ -259,6 +295,7 @@ public class PiratesBeGone{
 			int roadCost = sc.nextInt();
 		
 			graph.addEdge(origin, destination, roadCost);
+			// graph.addEdge(destination,origin, roadCost);
 		}
 
 		Xorviar(graph);
